@@ -19,8 +19,11 @@ public class Accedi extends javax.swing.JFrame {
         Nome = new javax.swing.JTextField();
         Password = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        Reg = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Accedi");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setText("Nome");
 
@@ -35,6 +38,13 @@ public class Accedi extends javax.swing.JFrame {
 
         jLabel2.setText("Password");
 
+        Reg.setText("Registrati");
+        Reg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -45,11 +55,12 @@ public class Accedi extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Accedi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Password)
-                    .addComponent(Nome))
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Reg)
+                    .addComponent(Accedi, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Nome, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(154, 154, 154))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -64,52 +75,48 @@ public class Accedi extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(3, 3, 3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Accedi)
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Reg)
+                .addContainerGap(118, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void RegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegActionPerformed
+        // TODO add your handling code here:
+        Registrazione reg = new Registrazione();
+        reg.setVisible(true);
+        Accedi.this.setVisible(false);
+    }//GEN-LAST:event_RegActionPerformed
+
     private void AccediActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AccediActionPerformed
         // TODO add your handling code here:
         String connectionString = "jdbc:mysql://localhost:3306/contatti?user=root&password=&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-  
         Connection connection = null;
-        try {
+
+        try
+        {
             connection = DriverManager.getConnection(connectionString);
             PreparedStatement prepared = connection.prepareStatement("SELECT * FROM persone WHERE Nome=? AND Password=?");
             prepared.setString(1, Nome.getText());
             prepared.setString(2, Password.getText());
             ResultSet rs = prepared.executeQuery();
             if (rs.next()) {
-		
+                JOptionPane.showMessageDialog(null, "Accesso consentito",  "Accesso negato", JOptionPane.WARNING_MESSAGE);
             }  else {
                 JOptionPane.showMessageDialog(null, "Nome o password errati",  "Accesso negato", JOptionPane.WARNING_MESSAGE);
             }
-        
-        } 
-        
-        catch (SQLException e) {
-	e.printStackTrace();
-        } 
-        
-        catch (Exception e) {
-	System.out.println(e.getMessage());
-        } finally {
-	try {
-		if (connection != null)
-			connection.close();
-	} catch (SQLException e) {
-		// gestione errore in chiusura
-	}
-        } 
+        }
+
+        catch (SQLException e)
+        {
+        }
+
     }//GEN-LAST:event_AccediActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -119,7 +126,7 @@ public class Accedi extends javax.swing.JFrame {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
                     break;
                 }
             }
@@ -141,11 +148,15 @@ public class Accedi extends javax.swing.JFrame {
             }
         });
     }
-     // <editor-fold defaultstate="collapsed" desc="Componenti Form"> 
+     
+
+
+    // <editor-fold defaultstate="collapsed" desc="Componenti Form"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Accedi;
     private javax.swing.JTextField Nome;
     private javax.swing.JTextField Password;
+    private javax.swing.JButton Reg;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
